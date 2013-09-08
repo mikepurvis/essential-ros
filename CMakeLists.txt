@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(book)
+project(essential-ros)
 
 set(TEXTS
   title
@@ -7,32 +7,40 @@ set(TEXTS
   foo-other
 )
 
+set(EDITIONS
+  hydro
+)
+
 set(PROCESSED_TEXTS)
 
-foreach(TEXT ${TEXTS})
-  #  add_custom_target(${TEXT}.md
-  #  DEPENDS text/${TEXT}.em.md
-  #  COMMAND empy -D"rosdistro='hydro'" ${PROJECT_SOURCE_DIR}/text/${TEXT}.em.md > ${TEXT}.md
-  #  )
+foreach(EDITION ${EDITIONS})
+  file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/${EDITION})
+
+  foreach(TEXT ${TEXTS})
+    set(OUTPUT "${EDITION}/${TEXT}.md") 
+    add_custom_command(
+      OUTPUT ${OUTPUT}
+      DEPENDS text/${TEXT}.em.md
+      COMMAND empy -D"rosdistro='hydro'" ${PROJECT_SOURCE_DIR}/text/${TEXT}.em.md > ${OUTPUT}
+      )
+    list(APPEND PROCESSED_TEXTS ${OUTPUT})
+  endforeach()
+
+  set(OUTPUT "${EDITION}/${PROJECT_NAME}.html") 
   add_custom_command(
-    OUTPUT ${TEXT}.md
-    DEPENDS text/${TEXT}.em.md
-    COMMAND empy -D"rosdistro='hydro'" ${PROJECT_SOURCE_DIR}/text/${TEXT}.em.md > ${TEXT}.md
+    OUTPUT ${OUTPUT}
+    DEPENDS ${PROCESSED_TEXTS}
+    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT} --self-contained
     )
-  list(APPEND PROCESSED_TEXTS ${TEXT}.md)
+  add_custom_target(${EDITION}-html ALL DEPENDS ${OUTPUT})
+
+  set(OUTPUT "${EDITION}/${PROJECT_NAME}.pdf") 
+  add_custom_command(
+    OUTPUT ${OUTPUT}
+    DEPENDS ${PROCESSED_TEXTS}
+    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT}
+    )
+  add_custom_target(${EDITION}-pdf ALL DEPENDS ${OUTPUT})
 endforeach()
-
-add_custom_command(
-  OUTPUT ${PROJECT_NAME}.html
-  DEPENDS ${PROCESSED_TEXTS}
-  COMMAND pandoc ${PROCESSED_TEXTS} -o ${PROJECT_NAME}.html --self-contained
-  )
-
-add_custom_command(
-  OUTPUT ${PROJECT_NAME}.pdf
-  DEPENDS ${PROCESSED_TEXTS}
-  COMMAND pandoc ${PROCESSED_TEXTS} -o ${PROJECT_NAME}.pdf
-  )
-
-add_custom_target(html ALL DEPENDS ${PROJECT_NAME}.html)
-add_custom_target(pdf ALL DEPENDS ${PROJECT_NAME}.pdf)
+# TODO: target for multipage html-site target
+# TODO: target for epub
