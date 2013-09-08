@@ -1,2 +1,3 @@
 python-empy
+texlive-latex-base
 pandoc
