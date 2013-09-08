@@ -1,0 +1,9 @@
+language: c
+git:
+  depth: 0
+before_install:
+  - sudo apt-get install $(< deps.txt)
+script:
+  - mkdir build && cd build
+  - cmake ..
+  - make
