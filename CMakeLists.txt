@@ -12,6 +12,7 @@ set(EDITIONS
 )
 
 set(PROCESSED_TEXTS)
+file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/outputs)
 
 foreach(EDITION ${EDITIONS})
   file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/${EDITION})
@@ -26,7 +27,7 @@ foreach(EDITION ${EDITIONS})
     list(APPEND PROCESSED_TEXTS ${OUTPUT})
   endforeach()
 
-  set(OUTPUT "${EDITION}/${PROJECT_NAME}.html") 
+  set(OUTPUT "outputs/${PROJECT_NAME}-${EDITION}.html") 
   add_custom_command(
     OUTPUT ${OUTPUT}
     DEPENDS ${PROCESSED_TEXTS}
@@ -34,7 +35,7 @@ foreach(EDITION ${EDITIONS})
     )
   add_custom_target(${EDITION}-html ALL DEPENDS ${OUTPUT})
 
-  set(OUTPUT "${EDITION}/${PROJECT_NAME}.pdf") 
+  set(OUTPUT "outputs/${PROJECT_NAME}-${EDITION}.pdf") 
   add_custom_command(
     OUTPUT ${OUTPUT}
     DEPENDS ${PROCESSED_TEXTS}
