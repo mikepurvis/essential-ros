@@ -3,7 +3,7 @@ project(essential-ros)
 
 set(TEXTS
   title
-  simple-test
+  installation
   foo-other
 )
 
