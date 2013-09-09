@@ -16,14 +16,19 @@ file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/outputs)
 
 foreach(EDITION ${EDITIONS})
   file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/${EDITION})
-
+  set(EMPY_INVOCATION empy -F${PROJECT_SOURCE_DIR}/editions/${EDITION}.py)
+  execute_process(
+    COMMAND ${EMPY_INVOCATION} ${PROJECT_SOURCE_DIR}/text/version-brief.em.txt
+    OUTPUT_VARIABLE VERSION_BRIEF
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  
   foreach(TEXT ${TEXTS})
     set(OUTPUT "${EDITION}/${TEXT}.md") 
+    set(INPUT "${PROJECT_SOURCE_DIR}/text/${TEXT}.em.md") 
     add_custom_command(
+      DEPENDS ${INPUT}
       OUTPUT ${OUTPUT}
-      DEPENDS text/${TEXT}.em.md
-      COMMAND empy -F${PROJECT_SOURCE_DIR}/editions/${EDITION}.py
-          ${PROJECT_SOURCE_DIR}/text/${TEXT}.em.md > ${OUTPUT}
+      COMMAND ${EMPY_INVOCATION} ${INPUT} > ${OUTPUT}
       )
     list(APPEND PROCESSED_TEXTS ${OUTPUT})
   endforeach()
@@ -41,7 +46,7 @@ foreach(EDITION ${EDITIONS})
   add_custom_command(
     OUTPUT ${OUTPUT}
     DEPENDS ${PROCESSED_TEXTS} ${TEMPLATE}
-    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT} --template=${TEMPLATE} --latex-engine=xelatex
+    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT} --template=${TEMPLATE} --variable version="${VERSION_BRIEF}" --latex-engine=xelatex
     )
   add_custom_target(${EDITION}-pdf ALL DEPENDS ${OUTPUT})
 endforeach()
