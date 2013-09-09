@@ -1,3 +1,5 @@
 python-empy
 texlive-latex-extra
+texlive-xetex
+texlive-fonts-recommended
 pandoc

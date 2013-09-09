@@ -36,10 +36,11 @@ foreach(EDITION ${EDITIONS})
   add_custom_target(${EDITION}-html ALL DEPENDS ${OUTPUT})
 
   set(OUTPUT "outputs/${PROJECT_NAME}-${EDITION}.pdf") 
+  set(TEMPLATE "${PROJECT_SOURCE_DIR}/tex/template.tex") 
   add_custom_command(
     OUTPUT ${OUTPUT}
-    DEPENDS ${PROCESSED_TEXTS}
-    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT}
+    DEPENDS ${PROCESSED_TEXTS} ${TEMPLATE}
+    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT} --template=${TEMPLATE} --variable mainfont=Georgia --variable sansfont=Arial --variable monofont="Bitstream Vera Sans Mono" --latex-engine=xelatex
     )
   add_custom_target(${EDITION}-pdf ALL DEPENDS ${OUTPUT})
 endforeach()

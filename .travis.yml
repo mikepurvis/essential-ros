@@ -8,6 +8,7 @@ env:
    - secure: "Xarw8ECTx3xSCedH/YPnSZUNOqh1SQWK+xdvAyUR3GZIJHYnnqTqsaNxNU0ac21ZcvTXalpeyrjMX4kcq1+4r6LuwZS14vaw0w+o6taviA4CQEYXypQLMINvGI8xjphKbxHccK4tOzXseLRwuvDMtnUBCSOJgaFfNyBTFhEvX1Q="
    - secure: "YKm1NDAjpPEDvdjwrcdC+NcA5Vfqft9TdqCUvEDpoNBeP8Aoy01CLpuEYQ0jfczUh+bu2XiFCCxbZCY7tLonzbkhMHnVaEFxYVNfBNZ8ahM0jBgyYsqago5frQbvS7/hyyJSbQ6ex3g1GpE+/1tEPlJFAaw+2NW7WqpFz9lil1k="
 install:
+  - travis-artifacts upload --path outputs
   - sudo apt-get install $(< deps.txt)
 script:
   - mkdir build && cd build
@@ -15,4 +16,3 @@ script:
   - make
 after_success:
   - gem install travis-artifacts
-  - travis-artifacts upload --path outputs
