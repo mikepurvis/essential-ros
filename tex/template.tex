@@ -28,6 +28,10 @@
 \cfoot{}
 \rfoot{\thepage}
 
+% Chapters start new pages.
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
+
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$

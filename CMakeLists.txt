@@ -4,7 +4,11 @@ project(essential-ros)
 set(TEXTS
   title
   installation
-  foo-other
+  hello-world
+  # python-package
+  # msg-package
+  # source-control
+  # hack-released-package
 )
 
 set(EDITIONS

@@ -10,18 +10,18 @@ To get started, first make sure you're on an Ubuntu @(ubuntu_num) machine.
 The following snippet adds the ROS package repo to Ubuntu, adds the public key which verifies that the packages have not been tampered with since release, and triggers APT to update its list of available packages for us.
 
 ~~~bash
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu @(ubuntu) main" \
+$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu @(ubuntu) main" \
        > /etc/apt/sources.list.d/ros-latest.list'
-wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
-sudo apt-get update
+$ wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+$ sudo apt-get update
 ~~~
 
-Now that APT knows about ROS, we can install it:
+Now that APT knows about ROS, it can be installed:
 
 ~~~bash
-sudo apt-get install ros-@(rosdistro)-ros-base
+$ sudo apt-get install ros-@(rosdistro)-ros-base
 ~~~
 
-You'll need to download about 200MB of archives from packages.ros.org to do the minimal "base" install of ROS @(rosdistro.capitalize()). It's a much bigger download to perform the full desktop install---you can do that later once you actually need it.
+You'll need to download about 200MB of archives from packages.ros.org to do the minimal "base" install of ROS @(rosdistro.capitalize()). It's a much bigger download to perform the full desktop install---that can be saved for later on when it's actually required.
 
-That's it, you have the core ROS software on your computer, now let's build!
+That's it, the core ROS software packages are on your computer, now let's move on to creating a new ROS package.
