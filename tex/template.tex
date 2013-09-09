@@ -129,13 +129,11 @@ $for(include-before)$
 $include-before$
 
 $endfor$
-$if(toc)$
-{
+
 \hypersetup{linkcolor=black}
-\setcounter{tocdepth}{$toc-depth$}
+\setcounter{tocdepth}{2}
 \tableofcontents
-}
-$endif$
+
 $body$
 
 $if(natbib)$

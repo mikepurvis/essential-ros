@@ -8,7 +8,7 @@ set(TEXTS
 )
 
 set(EDITIONS
-  hydro
+  hydro-precise
 )
 
 set(PROCESSED_TEXTS)
@@ -22,7 +22,8 @@ foreach(EDITION ${EDITIONS})
     add_custom_command(
       OUTPUT ${OUTPUT}
       DEPENDS text/${TEXT}.em.md
-      COMMAND empy -D"rosdistro='hydro'" ${PROJECT_SOURCE_DIR}/text/${TEXT}.em.md > ${OUTPUT}
+      COMMAND empy -F${PROJECT_SOURCE_DIR}/editions/${EDITION}.py
+          ${PROJECT_SOURCE_DIR}/text/${TEXT}.em.md > ${OUTPUT}
       )
     list(APPEND PROCESSED_TEXTS ${OUTPUT})
   endforeach()
@@ -40,7 +41,7 @@ foreach(EDITION ${EDITIONS})
   add_custom_command(
     OUTPUT ${OUTPUT}
     DEPENDS ${PROCESSED_TEXTS} ${TEMPLATE}
-    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT} --template=${TEMPLATE} --variable mainfont=Georgia --variable sansfont=Arial --variable monofont="Bitstream Vera Sans Mono" --latex-engine=xelatex
+    COMMAND pandoc ${PROCESSED_TEXTS} -o ${OUTPUT} --template=${TEMPLATE} --latex-engine=xelatex
     )
   add_custom_target(${EDITION}-pdf ALL DEPENDS ${OUTPUT})
 endforeach()
