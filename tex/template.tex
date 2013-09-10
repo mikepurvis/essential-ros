@@ -30,7 +30,7 @@
 
 % Chapters start new pages.
 \usepackage{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
+\newcommand{\sectionbreak}{\clearpage\thispagestyle{plain}}
 
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}

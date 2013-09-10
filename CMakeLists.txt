@@ -7,10 +7,10 @@ set(TEXTS
   installation
   workspaces-packages
   cpp-package
-  # python-package
-  # msg-package
-  # source-control
-  # hack-released-package
+  python-package
+  msg-package
+  source-control
+  hack-released-package
 )
 
 set(EDITIONS
