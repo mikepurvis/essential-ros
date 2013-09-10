@@ -56,7 +56,7 @@ Now, demonstrate that we can find the new package:
 
 ~~~bash
 $ rospack find shiny_thing
-/home/username/ros_ws/src/shiny_thing
+/home/user/ros_ws/src/shiny_thing
 ~~~
 
 Use the `roscd` command to jump inside the package folder and look around:
@@ -80,10 +80,10 @@ If you're predominantly developing in ROS @(rosdistro.capitalize), it does make 
 
 ~~~bash
 source /opt/ros/@(rosdistro)/setup.bash
-alias kf="source ${HOME}/kingfisher_ws/devel/setup.bash"
+alias kf="source ${HOME}/kf_ws/devel/setup.bash"
 ~~~
 
-A more complex, but generalized version of this same approach:
+A more complex, but generalized version of this same approach will let you jump into a `kf_ws` workspace with `ws kf_ws`. It also includes tab completion, so that you can simply type `ws<tab>`, and see a list of workspaces in the root of your home directory:
 
 ~~~bash
 source /opt/ros/@(rosdistro)/setup.bash

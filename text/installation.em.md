@@ -1,9 +1,9 @@
 Installation
 ============
 
-All ROS software is organized in modular units called packages. A ROS package may be added to your system by checking out and building the repository which contains it; the ROS system contains tools which help you do this, including resolving dependencies which that package may have on other packages in the ROS ecosystem.
+All ROS software is organized in modular units called packages. Any ROS package may be added to your system by checking out and building the repository which contains it; the ROS system contains tools which help you do this, including resolving the dependencies which will be required for that package to build.
 
-For Ubuntu, many ROS packages are also available through the native Ubuntu package management system, APT. All of the core ROS packages have been available this way from early on, and today many third party ROS packages are also conveniently available through APT. 
+For Ubuntu, many ROS packages are also available through the Ubuntu package management system, APT. All of the core ROS packages have been available this way from early on, and today many third party ROS packages are also conveniently available through APT. You want to install the base ROS software from APT packages.
 
 To get started, first make sure you're on an Ubuntu @(ubuntu_num) machine.
 

@@ -3,8 +3,10 @@ project(essential-ros)
 
 set(TEXTS
   title
+  introduction
   installation
-  hello-world
+  workspaces-packages
+  cpp-package
   # python-package
   # msg-package
   # source-control
