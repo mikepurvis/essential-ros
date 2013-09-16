@@ -1,7 +1,7 @@
 Workspaces & Packages
 =====================
 
-A major concept in ROS is workspaces. A workspace, at its core, is a handful of environment variables which tell key ROS tools how and where to find packages. First, we're going to explore the workspace provided with the APT-installed ROS packages, and then see how to make a source Workspace which overlays it, where package development may occur.
+A major concept in ROS is workspaces. A workspace, at its core, is a handful of environment variables which tell key ROS tools how and where to find packages. First, we're going to explore the workspace provided with the APT-installed ROS packages, and then see how to create a source workspace, where package development may occur.
 
 The APT Workspace
 -----------------
@@ -14,7 +14,7 @@ $ source /opt/ros/@(rosdistro)/setup.bash
 
 Eventually, you'll probably want this in your `.bashrc` file. For now, though, just run it in the terminal.
 
-Now your system knows about the installed ROS packages. You can prove this to yourself by using `rospack`, which tells where a package is located. Try using it to locate the `roscpp` package:
+Now your system knows about the installed ROS packages. You can prove this to yourself with `rospack find`, which outputs the path to a given package. Try using it to locate the `roscpp` package:
 
 ~~~bash
 $ rospack find roscpp
