@@ -50,7 +50,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "talker");
 
   ros::NodeHandle n;
-  pub = n.advertise<std_msgs::String>("hello", 1000);
+  pub = n.advertise<std_msgs::String>("chatter", 1000);
   timer = n.createTimer(ros::Duration(1.0), timerCallback);
 
   ROS_INFO("Initialization complete, now spinning.");
@@ -89,4 +89,60 @@ $ cd ~/cpp_tutorial_ws
 $ catkin_make
 ~~~
 
-Sweet.
+If all went well, you should have successfully built the `hello_node` binary.
+
+Running It
+----------
+
+The binary which has been built is buried in the `devel/lib/hello/` directory. You should never need to execute a ROS binary manually---it will always be done using the `rosrun` or `roslaunch` tools.
+
+Create a directory it your package for launch files, and create one there, for example:
+
+~~~bash
+$ roscd hello
+$ mkdir launch
+$ touch launch/hello.launch
+~~~
+
+Give your launch file the following contents:
+
+~~~xml
+<launch>
+  <node pkg="hello" type="hello_node" name="hello_node" />
+</launch>
+~~~
+
+Now launch it:
+
+~~~bash
+$ roslaunch hello hello.launch
+~~~
+
+If everything has gone well, `roslaunch` has done the following things:
+
+* Detected that `rosmaster` is not running,
+* Started `rosmaster`, and
+* Executed the `hello_node` binary inside the `hello` package.
+
+ROS is now running in this terminal, so open up a secondary terminal where we can interact with it. If you've added the `source` line to your .bashrc, then this new terminal is already good to go---try these commands:
+
+~~~bash
+$ rosnode list
+$ rostopic list
+$ rostopic echo /chatter
+~~~
+
+If these commands can't be found, then first `source /opt/ros/@(rosdistro)/setup.bash` and try again.
+
+What's going on here? First, a list of all running nodes, then a list of available data topics, and finally, a spool of messages being published to the `/chatter` topic, which is what is published-to by the `hello_node` created and launched above.
+
+At this point, you have the basic knowledge required to interact with many basic ROS systems. At its lowest level, ROS is a group of processes communicating by passing messages across topics. 
+
+What about `rosrun`?
+--------------------
+
+You can also run package scripts and binaries with `rosrun`, but in most situations, it's better to use `roslaunch`:
+
+* rosrun will find a specified binary within a given package, and execute it, but a `rosmaster` needs to already be running.
+* roslaunch uses a `.launch` xml file to specify multiple nodes to be launched. It can also set parameters, define groups and namespaces, work with arguments and environment variables, and include other `launch` files.
+* Packages should provide one or more example roslaunch files anyway, so you might as well create them upfront and develop using them.
